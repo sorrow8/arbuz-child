@@ -67,7 +67,7 @@ impl Token for ArbuzOrbitalInstance {
   }
 
   fn symbol(&self) -> String {
-    let symbol = String::from("magic-arbuz");
+    let symbol = String::from("magic-arbuz-card");
 
     format!("{}-{}", symbol, self.index())
   }
