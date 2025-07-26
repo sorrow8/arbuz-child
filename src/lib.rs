@@ -61,15 +61,30 @@ enum ArbuzOrbitalInstanceMessage {
 
 impl Token for ArbuzOrbitalInstance {
   fn name(&self) -> String {
-    let name = String::from("Magic Arbuz");
-
+    // Check if this is a template deployment (collection ID is 0:0) or minted instance
+    let collection_id = self.collection_ref();
+    
+    if collection_id.block == 0 && collection_id.tx == 0 {
+      // This is a template deployment
+      String::from("Magic Arbuz Orbital Template")
+    } else {
+      // This is a minted instance
+      let name = String::from("Magic Arbuz Card");
     format!("{} #{}", name, self.index())
+    }
   }
 
   fn symbol(&self) -> String {
+    let collection_id = self.collection_ref();
+    
+    if collection_id.block == 0 && collection_id.tx == 0 {
+      // This is a template deployment
+      String::from("magic-arbuz-orbital-template")
+    } else {
+      // This is a minted instance
     let symbol = String::from("magic-arbuz-card");
-
     format!("{}-{}", symbol, self.index())
+    }
   }
 }
 
