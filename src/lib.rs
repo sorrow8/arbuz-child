@@ -13,6 +13,7 @@ use alkanes_support::{
 
 use anyhow::Result;
 use std::sync::Arc;
+use sha2::{Sha256, Digest};
 
 #[derive(Default)]
 pub struct ArbuzOrbitalInstance(());
@@ -69,8 +70,9 @@ impl Token for ArbuzOrbitalInstance {
       String::from("Magic Arbuz Orbital Template")
     } else {
       // This is a minted instance
-      let name = String::from("Magic Arbuz Card");
-    format!("{} #{}", name, self.index())
+      let index = self.index();
+      let main_symbol = self.get_main_symbol_emoji(index);
+      format!("Magic Arbuz Card #{} {}", index, main_symbol)
     }
   }
 
@@ -243,6 +245,47 @@ impl ArbuzOrbitalInstance {
 
   fn set_index(&self, index: u128) {
     self.index_pointer().set_value::<u128>(index);
+  }
+
+  fn get_main_symbol_emoji(&self, index: u128) -> &'static str {
+    if index == 0 {
+      return "🌱";
+    }
+    
+    let mut hasher = Sha256::new();
+    hasher.update(index.to_le_bytes());
+    let hash = hasher.finalize();
+    
+    let encoded = u64::from_le_bytes(hash[0..8].try_into().unwrap());
+    
+    const EXAMPLE_BITS: u64 = 4;
+    const CLASSIC_CARD_BITS: u64 = 5;
+    const GLITCH_CARD_BITS: u64 = 3;
+    
+    let absolute_chance_byte = hash[25];
+    let is_absolute = absolute_chance_byte < 1;
+    
+    if is_absolute {
+      let absolute_card_code = (encoded & 1) as usize;
+      if absolute_card_code == 0 {
+        return "💀"; 
+      } else {
+        return "🍉"; 
+      }
+    }
+    
+    let chance_byte = hash[24];
+    let is_glitch = !is_absolute && chance_byte < 13;
+    
+    if is_glitch {
+      let glitch_symbols = vec!["🎈", "🧪", "☮️", "🌮", "🫐", "⛽", "⏰", "🐥"];
+      let glitch_card_code = ((encoded >> EXAMPLE_BITS) & ((1u64 << GLITCH_CARD_BITS) - 1)) as usize;
+      return glitch_symbols[glitch_card_code % glitch_symbols.len()];
+    }
+    
+    let classic_symbols = vec!["⭐", "🌙", "☀️", "🏯", "🎯", "🕯️", "🎩", "🪬", "🐉", "🧁", "🦇", "🤡", "🪽", "🫦", "🎠", "🦁", "🦅", "🙃", "🥀", "🌊", "🫵", "🌍"];
+    let card_code = ((encoded >> EXAMPLE_BITS) & ((1u64 << CLASSIC_CARD_BITS) - 1)) as usize;
+    classic_symbols[card_code % classic_symbols.len()]
   }
 }
 

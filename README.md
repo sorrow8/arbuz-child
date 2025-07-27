@@ -5,7 +5,7 @@ cargo build --target wasm32-unknown-unknown --release
 
 ## Deploy
 ```bash
-oyl alkane new-contract -c ./target/wasm32-unknown-unknown/release/arbuz_child.wasm -data 3,10 -p regtest
+oyl alkane new-contract -c ./target/wasm32-unknown-unknown/release/arbuz_child.wasm -data 3,427 -p regtest
 ```
 
 ## Gen block
