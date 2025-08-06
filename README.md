@@ -1,5 +1,9 @@
 # This Magic Arbuz Factory Contract
 
+<p align="center">
+  <img src="./arbuz.png" alt="ARBUZ Logo">
+</p>
+
 ## Build
 ```bash
 cargo build --target wasm32-unknown-unknown --release
