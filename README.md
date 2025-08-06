@@ -1,4 +1,4 @@
-# This Magic Arbuz Factory Contract
+# This Is Magic Arbuz Factory Contract
 
 <p align="center">
   <img src="./arbuz.png" alt="ARBUZ Logo">
@@ -16,5 +16,5 @@ oyl alkane new-contract -c ./target/wasm32-unknown-unknown/release/arbuz_child.w
 
 ## Trace
 ```bash
-oyl alkane trace -params '{"txid":"tx_id","vout":3}' -p network
+oyl alkane trace -params '{"txid":"id","vout":3}' -p network
 ```
