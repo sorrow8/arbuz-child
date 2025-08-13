@@ -4,6 +4,7 @@
   <img src="./arbuz.png" alt="ARBUZ Logo">
 </p>
 
+### For Local Testing:
 ## Build
 ```bash
 cargo build --target wasm32-unknown-unknown --release
@@ -11,7 +12,7 @@ cargo build --target wasm32-unknown-unknown --release
 
 ## Deploy
 ```bash
-oyl alkane new-contract -c ./target/wasm32-unknown-unknown/release/arbuz_child.wasm -data 3,id -p network
+oyl alkane new-contract -c ./target/wasm32-unknown-unknown/release/arbuz_child.wasm -data 3,id -p regtest
 ```
 
 ## Trace
