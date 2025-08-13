@@ -16,5 +16,5 @@ oyl alkane new-contract -c ./target/wasm32-unknown-unknown/release/arbuz_child.w
 
 ## Trace
 ```bash
-oyl alkane trace -params '{"txid":"id","vout":3}' -p network
+oyl alkane trace -params '{"txid":"txid","vout":3}' -p network
 ```

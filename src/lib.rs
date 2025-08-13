@@ -84,8 +84,10 @@ impl Token for ArbuzOrbitalInstance {
       String::from("magic-arbuz-orbital-template")
     } else {
       // This is a minted instance
-    let symbol = String::from("magic-arbuz-card");
-    format!("{}-{}", symbol, self.index())
+      let index = self.index();
+      let main_symbol = self.get_main_symbol_emoji(index);
+      let symbol = String::from("magic-arbuz-card");
+      format!("{}-{}-{}", symbol, index, main_symbol)
     }
   }
 }
@@ -283,7 +285,7 @@ impl ArbuzOrbitalInstance {
       return glitch_symbols[glitch_card_code % glitch_symbols.len()];
     }
     
-    let classic_symbols = vec!["⭐", "🌙", "☀️", "🏯", "🎯", "🕯️", "🎩", "🪬", "🐉", "🧁", "🦇", "🤡", "🪽", "🫦", "🎠", "🦁", "🦅", "🙃", "🥀", "🌊", "🫵", "🌍"];
+    let classic_symbols = vec!["⭐", "🌙", "☀️", "🏯", "🎯", "🕯️", "🎩", "🪬", "🐉", "🧁", "🦇", "🤡", "🪽", "🫦", "🎠", "🦁", "🦅", "🙃", "🥀", "🤐", "🫵", "🌎"];
     let card_code = ((encoded >> EXAMPLE_BITS) & ((1u64 << CLASSIC_CARD_BITS) - 1)) as usize;
     classic_symbols[card_code % classic_symbols.len()]
   }
