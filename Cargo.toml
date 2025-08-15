@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 description = "Arbuz Child Factory Contract"
 authors = ["Fartane Corp."]
+license = "MIT"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
